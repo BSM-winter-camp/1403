@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import style from "./App.module.css";
+import MessageInput from "./MessageInput.jsx";
+import Modal from "./Modal/Modal.jsx";
+import "./App.css";
+import Message from "./message.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [showModal, setShowModal] = useState(false);
+  const [selectedId, setSelectedId] = useState();
+  const [messages, setMessages] = useState([
+    { id: 1, text: "안녕하세요", createdAt: new Date() },
+    { id: 2, text: "안녕", createdAt: new Date() },
+  ]);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <main className={style.container}>
+      <section className={style.chattingSection}>
+        <div className={style.messageSection}>
+          {messages.map(function (msg) {
+            return (
+              <Message
+                key={msg.id}
+                id={msg.id}
+                text={msg.text}
+                setSelectedId={setSelectedId}
+                setShowModal={setShowModal}
+              />
+            );
+          })}
+        </div>
+        <MessageInput setMessages={setMessages} />
+      </section>
+      {showModal && (
+        <Modal
+          selectedId={selectedId}
+          setShowModal={setShowModal}
+          setMessages={setMessages}
+        />
+      )}
+    </main>
+  );
 }
 
-export default App
+export default App;

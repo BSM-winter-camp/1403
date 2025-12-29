@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  gap: 8px;
+}
+button {
+  transition: all 1s;
+}
+button:hover {
+  cursor: pointer;
+  background-color: #eee;
+  border-radius: 100px;
+}
